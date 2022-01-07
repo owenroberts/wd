@@ -1,0 +1,4 @@
+{
+	"click_one": { "src": "./drawings/click_one.json"},
+	"alphabet": { "src": "./drawings/alphabet.json" }
+}

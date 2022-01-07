@@ -1,0 +1,9 @@
+{
+	"door": { "src": "./drawings/items/door.json" },
+	"window": { "src": "./drawings/items/window.json" },
+	"cat": { "src": "./drawings/items/cat.json" },
+	"dog": { "src": "./drawings/items/dog.json" },
+	"tree": { "src": "./drawings/items/tree.json" },
+	"bird": { "src": "./drawings/items/bird.json" }
+
+}
