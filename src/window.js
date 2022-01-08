@@ -38,39 +38,159 @@ gme.load({
 let clickOne;
 
 let data = {
-	'window': {
-		next: ['tree', 'bird']
+	window: { next: ['tree', 'bird'],
+		label: ['window', 'setting', ]
 	},
-	'door': {
-		next: ['cat', 'dog']
-	}
+	door: { next: ['cat', 'dog'],
+		label: ['door', 'exposition', ]
+	},
+	bird: { next: ['flower', 'rabbit'],
+		label: ['bird', 'inciting incident']
+	},
+	cat: { next: ['jar', 'plunger'],
+		label: ['cat', 'protagonist']
+	},
+	dog: { next: ['hole', 'mailbox'],
+		label: ['dog', 'character']
+	},
+	tree: { next: ['serpent', 'fruit'],
+		label: ['tree', 'climax']
+	},
+	jar: { next: ['piss_christ', 'quorum'],
+		label: ['jar', 'resolution',]
+	},
+	employer: { next: ['nail', 'tofu'],
+		label: ['employer', 'gauntlet',]
+	},
+	flower: { next: ['garbage', 'valley'],
+		label: ['flower', 'time cave',]
+	},
+	fruit: { next: ['pig', 'premise'],
+		label: ['fruit', 'branch',]
+	},
+	garbage: { next: ['napkin', 'employer'],
+		label: ['garbage', 'bottleneck',]
+	},
+	hole: { next: ['iced_coffee', 'oyster'],
+		label: ['hole', 'quest',]
+	},
+	iced_coffee: { next: ['vacuum', 'moon'],
+		label: ['iced_coffee', 'conflict'] 
+	},
+	kill: { next: ['leaf', 'shirt'],
+		label: ['kill', 'sorting hat', ]
+	},
+	leaf: { next: ['worm', 'rubric'],
+		label: ['leaf', 'floating', ]
+	},
+	mailbox: { next: ['nacho', 'quicksand'],
+		label: ['mailbox', 'loop and grow', ]
+	},
+	moon: { next: ['kill', 'window'],
+		label: ['moon', 'flashback', ]
+	},
+	nacho: { next: ['door', 'underpants'],
+		label: ['nacho', 'fishbone', ]
+	},
+	nail: { next: ['jar', 'bird'],
+		label: ['nail', 'parallel', ]
+	},
+	napkin: { next: ['cat', 'door'],
+		label: ['napkin', 'frame', ]
+	},
+	oyster: { next: ['dog', 'employer'],
+		label: ['oyster', 'progress',]
+	},
+	pig: { next: ['flower', 'fruit'],
+		label: ['pig', 'emergence', ]
+	},
+	piss_christ: { next: ['garbage', 'hole'],
+		label: ['piss_christ', 'object oriented', ]
+	},
+	plunger: { next: ['iced_coffee', 'kill'],
+		label: ['plunger', 'choice', ]
+	},
+	premise: { next: ['leaf', 'mailbox'],
+		label: ['premise', 'doom',]
+	},
+	quicksand: { next: ['moon', 'nacho'],
+		label: ['quicksand', 'intent',]
+	},
+	quorum: { next: ['nail', 'plunger'],
+		label: ['quorum', 'intervention', ]
+	},
+	rabbit: { next: ['premise', 'quorum'],
+		label: ['rabbit', 'autonomy', ]
+	},
+	rubric: { next: ['napkin', 'oyster'],
+		label: ['rubric', 'agent', ]
+	},
+	serpent: { next: ['pig', 'quicksand'],
+		label: ['serpent', 'theme',]
+	},
+	shirt: { next: ['rabbit', 'tree'],
+		label: ['shirt', 'model', ]
+	},
+	tofu: { next: ['valley', 'underpants'],
+		label: ['tofu', 'resolution', ]
+	},
+	underpants: { next: ['vacuum', 'window'],
+		label: ['underpants', 'recognition']
+	},
+	vacuum: { next: ['serpent', 'shirt'],
+		label: ['vacuum', 'reversal',]
+	},
+	valley: { next: ['rubric', 'window'],
+		label: ['valley', 'obstacles',]
+	},
+	worm: { next: ['tofu', 'door'],
+		label: ['worm', 'turning point', ]
+	},
 }
 
 function newScene(a, b) {
+	console.log(...arguments);
 	let left = Cool.choice(...arguments);
 	let right = left == a ? b : a;
+	let sceneName = `${left}-${right}`;
 
-	let leftUI = new UI({ x: 0.25, y: 0.5, animation: gme.anims.items[left]});
-	leftUI.label = left;
-	let rightUI = new UI({ x: 0.75, y: 0.5, animation: gme.anims.items[right]});
-	rightUI.label = right;
+	let [leftLabel, rightLabel] = [left, right].map(side => {
+		if (data[side].index === undefined) {
+			data[side].index = 0;
+			return data[side].label[side[side].index];
+		} else if (data[side].index < data[side].label.length) {
+			data[side].index++;
+			return leftLabel = data[side].label[data[side].index];
+		} else { 
+			return 'the end';
+		}
+	});
 
+	if (gme.scenes[sceneName]) {
 
-	let y = 0.9 * gme.view.height
-	let letters = gme.anims.ui.alphabet;
-	let alphaString = 'abcdefghijklmnopqrstuvwxyz';
-	let leftLabel = new Text(gme.view.halfWidth / 2, y, left, 10, letters, alphaString);
-	let rightLabel = new Text(0.75 * gme.view.width, y, right, 10, letters, alphaString);
+	} else {
 
-	leftLabel.center();
-	rightLabel.center();
+		let leftUI = new UI({ x: 0.25, y: 0.5, animation: gme.anims.items[left]});
+		let rightUI = new UI({ x: 0.75, y: 0.5, animation: gme.anims.items[right]});
 
+		leftUI.item = left;
+		rightUI.item = right;
 
-	gme.scenes.current.addUI(leftUI);
-	gme.scenes.current.addUI(rightUI);
+		let y = 0.8 * gme.view.height
+		let letters = gme.anims.ui.alphabet;
+		let alphaString = 'abcdefghijklmnopqrstuvwxyz';
+		let leftLabel = new Text(gme.view.halfWidth / 2, y, leftLabel, 10, letters, alphaString);
+		let rightLabel = new Text(0.75 * gme.view.width, y, rightLabel, 10, letters, alphaString);
 
-	gme.scenes.current.addToDisplay(leftLabel);
-	gme.scenes.current.addToDisplay(rightLabel);
+		leftLabel.center();
+		rightLabel.center();
+
+		gme.scenes.current.addUI(leftUI);
+		gme.scenes.current.addUI(rightUI);
+
+		gme.scenes.current.addToDisplay(leftLabel, 'leftLabel');
+		gme.scenes.current.addToDisplay(rightLabel, 'rightLabel');
+	}
 
 	[leftUI, rightUI].forEach(ui => {
 		ui.onOver = function() {
@@ -94,12 +214,13 @@ function newScene(a, b) {
 		};
 
 		ui.onClick = function() {
-			if (!gme.scenes[ui.label]) {
-				gme.scenes[ui.label] = new Scene();
-				gme.scenes.current = ui.label; // do this first to assign right sprites
-				if (data[ui.label]) newScene(...data[ui.label].next);
+			if (!gme.scenes[sceneName]) {
+				gme.scenes[sceneName] = new Scene();
+				gme.scenes.current = ui.item; // do this first to assign right sprites
+				if (data[ui.item]) newScene(...data[ui.item].next);
 			} else {
-				gme.scenes.current = ui.label;
+				// fuck gotta change order and label ... 
+				gme.scenes.current = ui.item;
 			}
 			
 			

@@ -1,4 +1,0 @@
-{
-	"door": { "src": "./drawings/labels/door.json" },
-	"window": { "src": "./drawings/labels/window.json" }
-}

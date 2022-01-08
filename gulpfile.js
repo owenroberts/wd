@@ -66,7 +66,11 @@ function linesCopy() {
 
 function watchTask(){
 	watch('src/**/*.js', series(jsTask));
-	watch(['./lines/classes/*.js', './lines/game/classes/*.js'], series(lines.exportTask, linesCopy));
+	watch([
+		'./lines/classes/*.js', 
+		'./lines/game/classes/*.js',
+		'./lines/animate/**/*.js',
+	], series(lines.exportTask, linesCopy));
 }
 
 function cacheBustTask(){
