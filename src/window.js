@@ -35,7 +35,7 @@ gme.load({
 	items: './data/items.json'
 }, false);
 
-let clickOne;
+let clickOne, leftLabel, rightLabel;
 
 let data = {
 	window: { next: ['tree', 'bird'],
@@ -146,29 +146,39 @@ let data = {
 	worm: { next: ['tofu', 'door'],
 		label: ['worm', 'turning point', ]
 	},
-}
+};
 
 function newScene(a, b) {
-	console.log(...arguments);
+	// console.log(...arguments);
+
 	let left = Cool.choice(...arguments);
 	let right = left == a ? b : a;
 	let sceneName = `${left}-${right}`;
+	gme.scenes.current = sceneName;
 
-	let [leftLabel, rightLabel] = [left, right].map(side => {
+	let [leftLabelText, rightLabelText] = [left, right].map(side => {
 		if (data[side].index === undefined) {
 			data[side].index = 0;
-			return data[side].label[side[side].index];
-		} else if (data[side].index < data[side].label.length) {
+			return data[side].label[data[side].index];
+		} else if (data[side].index < data[side].label.length - 1) {
 			data[side].index++;
-			return leftLabel = data[side].label[data[side].index];
+			return data[side].label[data[side].index];
 		} else { 
 			return 'the end';
 		}
 	});
 
-	if (gme.scenes[sceneName]) {
+	leftLabel.setMsg(leftLabelText);
+	rightLabel.setMsg(rightLabelText);
 
-	} else {
+	leftLabel.x = Math.round(gme.view.width * 0.25);
+	rightLabel.x = Math.round(gme.view.width * 0.75);
+
+	leftLabel.center();
+	rightLabel.center();
+
+	if (!gme.scenes[sceneName]) {
+		gme.scenes[sceneName] = new Scene();
 
 		let leftUI = new UI({ x: 0.25, y: 0.5, animation: gme.anims.items[left]});
 		let rightUI = new UI({ x: 0.75, y: 0.5, animation: gme.anims.items[right]});
@@ -176,58 +186,41 @@ function newScene(a, b) {
 		leftUI.item = left;
 		rightUI.item = right;
 
-		let y = 0.8 * gme.view.height
-		let letters = gme.anims.ui.alphabet;
-		let alphaString = 'abcdefghijklmnopqrstuvwxyz';
-		let leftLabel = new Text(gme.view.halfWidth / 2, y, leftLabel, 10, letters, alphaString);
-		let rightLabel = new Text(0.75 * gme.view.width, y, rightLabel, 10, letters, alphaString);
-
-		leftLabel.center();
-		rightLabel.center();
-
 		gme.scenes.current.addUI(leftUI);
 		gme.scenes.current.addUI(rightUI);
 
-		gme.scenes.current.addToDisplay(leftLabel, 'leftLabel');
-		gme.scenes.current.addToDisplay(rightLabel, 'rightLabel');
+		[leftUI, rightUI].forEach(ui => {
+			ui.onOver = function() {
+				ui.animation.overrideProperty('wiggleRange', 2);
+				ui.animation.overrideProperty('wiggleSpeed', 1);
+
+				let speed = [0.2, 0.02];
+				let max = [6, 4];
+				ui.animation.onUpdate = function() {
+					if (ui.animation.override.wiggleRange < max[0]) {
+						ui.animation.override.wiggleRange += speed[0];
+					}
+					if (ui.animation.override.wiggleSpeed < max[1]) {
+						ui.animation.override.wiggleSpeed += speed[1];
+					}
+				};
+			};
+
+			ui.onOut = function() {
+				ui.animation.cancelOverride();
+			};
+
+			ui.onClick = function() {
+				if (!clickOne.clickedOnce) clickOne.clickedOnce = true;
+				ui.animation.cancelOverride();
+				if (data[ui.item]) newScene(...data[ui.item].next);
+			};
+		});
 	}
 
-	[leftUI, rightUI].forEach(ui => {
-		ui.onOver = function() {
-			ui.animation.overrideProperty('wiggleRange', 2);
-			ui.animation.overrideProperty('wiggleSpeed', 1);
-
-			let speed = [0.1, 0.01];
-			let max = [6, 4];
-			ui.animation.onUpdate = function() {
-				if (ui.animation.override.wiggleRange < max[0]) {
-					ui.animation.override.wiggleRange += speed[0];
-				}
-				if (ui.animation.override.wiggleSpeed < max[1]) {
-					ui.animation.override.wiggleSpeed += speed[1];
-				}
-			};
-		};
-
-		ui.onOut = function() {
-			ui.animation.cancelOverride();
-		};
-
-		ui.onClick = function() {
-			if (!gme.scenes[sceneName]) {
-				gme.scenes[sceneName] = new Scene();
-				gme.scenes.current = ui.item; // do this first to assign right sprites
-				if (data[ui.item]) newScene(...data[ui.item].next);
-			} else {
-				// fuck gotta change order and label ... 
-				gme.scenes.current = ui.item;
-			}
-			
-			
-		};
-	});
-
+	
 }
+
 
 gme.start = function() {
 	document.getElementById('splash').remove();
@@ -235,18 +228,27 @@ gme.start = function() {
 
 	clickOne = new Sprite(gme.view.halfWidth, gme.anims.ui.click_one.halfHeight, gme.anims.ui.click_one);
 	clickOne.center = true;
+	clickOne.clickedOnce = false;
 	gme.scenes.start.addToDisplay(clickOne);
 
-	gme.scenes.current = 'start';
+	let y = 0.8 * gme.view.height
+	let letters = gme.anims.ui.alphabet;
+	let alphaString = 'abcdefghijklmnopqrstuvwxyz';
+	leftLabel = new Text(gme.view.halfWidth / 2, y, 'window', 8, letters, alphaString);
+	rightLabel = new Text(0.75 * gme.view.width, y, 'door', 8, letters, alphaString);
+	leftLabel.center();
+	rightLabel.center();
+
+	let test = new Text(gme.view.halfWidth, gme.view.halfHeight, 'inciting incident', 8, letters, alphaString)
 	newScene('window', 'door');
 };
 
-// gme.update = function(timeElapsed) {
-	
-// };
 
 gme.draw = function() {
+	if (!clickOne.clickedOnce) clickOne.display();
 	gme.scenes.current.display();
+	leftLabel.display(false, false, 0, 0, true);
+	rightLabel.display(false, false, 0, 0, true);
 };
 
 gme.mouseMoved = function(x, y) {
