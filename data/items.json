@@ -19,7 +19,7 @@
 	"napkin": { "src": "./drawings/items/napkin.json" },
 	"oyster": { "src": "./drawings/items/oyster.json" },
 	"pig": { "src": "./drawings/items/pig.json" },
-	"piss_christ": { "src": "./drawings/items/piss_christ.json" },
+	"skeleton": { "src": "./drawings/items/skeleton.json" },
 	"plunger": { "src": "./drawings/items/plunger.json" },
 	"premise": { "src": "./drawings/items/premise.json" },
 	"quicksand": { "src": "./drawings/items/quicksand.json" },

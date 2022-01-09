@@ -57,7 +57,7 @@ let data = {
 	tree: { next: ['serpent', 'fruit'],
 		label: ['tree', 'climax', 'the hunt began', 'they are the player', 'they found the seed']
 	},
-	jar: { next: ['piss_christ', 'quorum'],
+	jar: { next: ['skeleton', 'quorum'],
 		label: ['jar', 'resolution', 'they were a thinker', 'they find a jar of memories', 'they were lying', ]
 	},
 	employer: { next: ['nail', 'tofu'],
@@ -101,52 +101,52 @@ let data = {
 	},
 
 	oyster: { next: ['dog', 'employer'],
-		label: ['oyster', 'progress', 'an explosion']
+		label: ['oyster', 'progress', 'an explosion', 'the oyster of discord', 'they wanted the world']
 	},
 	pig: { next: ['flower', 'fruit'],
-		label: ['pig', 'emergence', ]
+		label: ['pig', 'emergence', 'they ran from their kin the squealer', 'they found love in the forest', 'they found love in the soil']
 	},
-	piss_christ: { next: ['garbage', 'hole'],
-		label: ['piss_christ', 'object oriented', ]
+	skeleton: { next: ['garbage', 'hole'],
+		label: ['skeleton', 'they had a problem', 'the skeleton told them to seek the creature the body of a lion', 'was it a metaphor']
 	},
 	plunger: { next: ['iced_coffee', 'kill'],
-		label: ['plunger', 'choice', ]
+		label: ['plunger', 'choice', 'they were filled with envy', 'they could not remove the obstacle', 'many years later they wondered who was really the envious one']
 	},
 	premise: { next: ['leaf', 'mailbox'],
-		label: ['premise', 'doom',]
+		label: ['premise', 'doom', 'just murder', 'and adultery', 'and conspiracy']
 	},
 	quicksand: { next: ['moon', 'nacho'],
-		label: ['quicksand', 'intent',]
+		label: ['quicksand', 'intent', 'they could not erase the memory', 'and they were driven mad', 'and they descended further']
 	},
 	quorum: { next: ['nail', 'plunger'],
-		label: ['quorum', 'intervention', ]
+		label: ['quorum', 'intervention', 'they did not wait for quorum', 'the body was stripped bare', 'the public gathering was minimal']
 	},
 	rabbit: { next: ['premise', 'quorum'],
-		label: ['rabbit', 'autonomy', ]
+		label: ['rabbit', 'autonomy', 'they did not know', 'their love was forbidden', 'the messenger was lost in the wind', ]
 	},
 	rubric: { next: ['napkin', 'oyster'],
-		label: ['rubric', 'agent', ]
+		label: ['rubric', 'agent', 'was it ideology or idealism', 'carnal or bodily', 'a sacrifice']
 	},
 	serpent: { next: ['pig', 'quicksand'],
-		label: ['serpent', 'theme',]
+		label: ['serpent', 'theme', 'the self without the other', 'like a stream', 'the hero']
 	},
 	shirt: { next: ['rabbit', 'tree'],
-		label: ['shirt', 'model', ]
+		label: ['shirt', 'model', 'a secret passion', 'or a lover', 'lost forever']
 	},
 	tofu: { next: ['valley', 'underpants'],
-		label: ['tofu', 'resolution', ]
+		label: ['tofu', 'resolution', 'the days were full of monotony', 'they searched for a way out']
 	},
 	underpants: { next: ['vacuum', 'window'],
-		label: ['underpants', 'recognition']
+		label: ['underpants', 'recognition', 'one day they said enough', 'they emerged from darkness', 'and nothing could stop them']
 	},
 	vacuum: { next: ['serpent', 'shirt'],
-		label: ['vacuum', 'reversal',]
+		label: ['vacuum', 'reversal', 'the deception was right in front of them', 'they chose not to see it', 'until it was too late']
 	},
 	valley: { next: ['rubric', 'window'],
-		label: ['valley', 'obstacles',]
+		label: ['valley', 'obstacles', 'the depression was deep and long', 'their love was a crime', 'they walked slowly toward exile']
 	},
 	worm: { next: ['tofu', 'door'],
-		label: ['worm', 'turning point', ]
+		label: ['worm', 'turning point', 'they would not give up on their love', 'the world tried to keep them apart', 'but it could not']
 	},
 };
 
