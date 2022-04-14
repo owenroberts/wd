@@ -28,10 +28,5 @@
     "url": "git+https://github.com/owenroberts/boiler.git"
   },
   "author": "owen ribbit",
-  "license": "MIT",
-  "dependencies": {
-    
-    "doodoo": "file:doodoo",
-    "lines": "file:lines"
-  }
+  "license": "MIT"
 }

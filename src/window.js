@@ -12,7 +12,7 @@ if (isMobile) document.body.classList.add('mobile');
 /* this is the game part */
 const gme = new Game({
 	dps: 30,
-	lineWidth: 1,
+	lineWidth: 2,
 	width: 640,
 	height: 600,
 	multiColor: true,
@@ -223,6 +223,8 @@ function newScene(a, b) {
 }
 
 gme.start = function() {
+	
+	clearInterval(loadingInterval);
 	document.getElementById('splash').remove();
 	gme.scenes.current = 'game';
 

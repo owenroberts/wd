@@ -8,7 +8,7 @@
 
 html, body { 
 	width: 100%; height: 100%;
-	font-family: verdana, arial;
+	font-family: Verdana, Arial, sans-serif;
 }
 
 .dark {
@@ -25,6 +25,8 @@ canvas {
 #controls {
 	width:  600px;
 	margin:  0 auto;
+	text-align: right;
+	padding: 0.5em 0;
 }
 
 
@@ -56,7 +58,7 @@ canvas {
 }
 
 #splash * {
-	font-family: verdana;
+	font-family: Verdana, Arial, sans-serif;
 }
 
 .mobile #inner-splash {
