@@ -9,6 +9,7 @@ let loadingInterval = setInterval(loadingAnimation, 1000 / 12);
 const isMobile = Cool.mobilecheck();
 if (isMobile) document.body.classList.add('mobile');
 
+
 /* this is the game part */
 const gme = new Game({
 	dps: 30,
@@ -21,7 +22,7 @@ const gme = new Game({
 	// stats: true,
 	suspend: true,
 	events: isMobile ? ['touch'] : ['keyboard', 'mouse'],
-	scenes: ['start', 'game'],
+	scenes: ['start', 'game', 'mobile'],
 	bounds: {
 		left: -1024,
 		top: 1024,
@@ -209,23 +210,69 @@ function newScene(a, b) {
 				ui.animation.cancelOverride();
 			};
 
-			ui.onClick = function() {
+			ui.onClick = function(x, y) {
 
 				if (!clickOne.clickedOnce) clickOne.clickedOnce = true;
 				ui.animation.cancelOverride();
+
 				if (data[ui.item]) {
 					newScene(...data[ui.item].next);
 					data[ui.item].index++;
 				}
+				// simulate mouse move for changing scene ...
+				gme.scenes.current.mouseMoved(x, y);
 			};
 		});
 	}
 }
 
 gme.start = function() {
-	
+
 	clearInterval(loadingInterval);
 	document.getElementById('splash').remove();
+	if (isMobile && window.innerWidth < 640) {
+		let w = window.innerWidth / 2,
+		 	h = window.innerHeight / 2;
+		let o = 24;
+
+		let win = new Sprite(w + o, h + o + 10, gme.anims.items.window);
+		gme.scenes.mobile.addToDisplay(win);
+
+		let door = new Sprite(w - o, h - o + 10, gme.anims.items.door);
+		// gme.scenes.mobile.addToDisplay(door);
+
+		[win, door].forEach(s => {
+			s.center = true;
+			gme.scenes.mobile.addToDisplay(s);
+			s.animation.play();
+			s.animation.overrideProperty('wiggleRange', 2);
+			s.animation.overrideProperty('wiggleSpeed', 1);
+
+			let speed = [0.05, 0.005];
+			let max = [20, 20];
+			s.animation.onUpdate = function() {
+				if (s.animation.override.wiggleRange < max[0]) {
+					s.animation.override.wiggleRange += speed[0];
+				}
+				if (s.animation.override.wiggleSpeed < max[1]) {
+					s.animation.override.wiggleSpeed += speed[1];
+				}
+			};
+		})
+
+		let m = 'window door should be played on a computer';
+		let label = new Text(32, 0, m, 12, gme.anims.ui.alphabet, alphaString);
+		gme.scenes.mobile.addToDisplay(label);
+
+		gme.draw = function() {
+			gme.scenes.current.display();
+		};
+
+		gme.scenes.current = 'mobile';
+		return;
+	}
+	
+	
 	gme.scenes.current = 'game';
 
 	clickOne = new Sprite(gme.view.halfWidth, gme.anims.ui.click_one.halfHeight, gme.anims.ui.click_one);

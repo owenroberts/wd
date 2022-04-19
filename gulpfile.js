@@ -9,7 +9,6 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 const npmDist = require('gulp-npm-dist');
 
-
 function browserSyncTask() {
 	return browserSync.init({
 		port: 8080,

@@ -29,8 +29,6 @@ canvas {
 	padding: 0.5em 0;
 }
 
-
-
 #splash {
 	z-index: 1;
 	position: fixed;
@@ -65,11 +63,6 @@ canvas {
 	text-align:  center;
 }
 
-/* debug remove */
-#log {
-	position: fixed;
-	top: 10px;
-	left: 10px;
-	font-family:  monaco, monospace;
-	font-size:  32px;
+.mobile #controls {
+	width: 100%;
 }
